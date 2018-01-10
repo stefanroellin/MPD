@@ -367,6 +367,11 @@ AC_ARG_ENABLE(soundcloud,
 		[enable support for soundcloud.com]),,
 	[enable_soundcloud=auto])
 
+AC_ARG_ENABLE(tidal,
+	AS_HELP_STRING([--enable-tidal],
+		[enable support for Tidal streaming]),,
+	[enable_tidal=auto])
+
 AC_ARG_ENABLE([libwrap],
 	AS_HELP_STRING([--enable-libwrap], [use libwrap]),,
 	[enable_libwrap=auto])
@@ -692,6 +697,11 @@ dnl Input Plugins
 dnl ---------------------------------------------------------------------------
 
 dnl ----------------------------------- CURL ----------------------------------
+
+if x$enable_tidal = xyes; then
+	enable_curl=yes
+fi
+
 MPD_ENABLE_AUTO_PKG(curl, CURL, [libcurl >= 7.18],
 	[libcurl HTTP streaming], [libcurl not found])
 
@@ -711,6 +721,12 @@ MPD_AUTO([soundcloud], [soundcloud.com support], [libyajl not found],
 		[found_soundcloud=no])])
 MPD_DEFINE_CONDITIONAL(enable_soundcloud, ENABLE_SOUNDCLOUD,
 	[soundcloud.com support])
+
+dnl --------------------------------- Tidal -----------------------------------
+MPD_AUTO([tidal], [Tidal streaming support], [libcurl not found],
+	[found_tidal=$enable_curl])
+MPD_DEFINE_CONDITIONAL(enable_tidal, ENABLE_TIDAL,
+	[Tidal streaming support])
 
 dnl ---------------------------------- cdio ---------------------------------
 MPD_ENABLE_AUTO_PKG(cdio_paranoia, CDIO_PARANOIA, [libcdio_paranoia],

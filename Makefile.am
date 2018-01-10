@@ -1361,6 +1361,12 @@ libinput_a_SOURCES += \
 	src/IcyMetaDataParser.cxx src/IcyMetaDataParser.hxx
 endif
 
+if ENABLE_TIDAL
+libinput_a_SOURCES += \
+	src/input/plugins/TidalLoginClient.cxx src/input/plugins/TidalLoginClient.hxx \
+	src/input/plugins/TidalInputPlugin.cxx src/input/plugins/TidalInputPlugin.hxx
+endif
+
 if ENABLE_SMBCLIENT
 libinput_a_SOURCES += \
 	$(SMBCLIENT_SOURCES) \
